@@ -1,0 +1,91 @@
+[
+  {
+    "id": "gt-001",
+    "source_meeting": "Onboarding Call — Founder A",
+    "meeting_date": "2026-07-10",
+    "owner": "Founder A",
+    "commitment": "Send updated financial model to the Principal",
+    "expected_deadline_field": "2026-07-18",
+    "expect_extracted": true,
+    "edge_case": "clean-positive",
+    "expected_overdue_as_of_2026-07-25": true
+  },
+  {
+    "id": "gt-002",
+    "source_meeting": "Investor Intro — Founder B x Investor X",
+    "meeting_date": "2026-07-14",
+    "owner": "Founder B",
+    "commitment": "Send pitch deck to Investor X",
+    "expected_deadline_field": "no deadline given",
+    "expect_extracted": true,
+    "edge_case": "no-deadline-stated",
+    "expected_overdue_as_of_2026-07-25": false
+  },
+  {
+    "id": "gt-003",
+    "source_meeting": "Dinner Planning — Summer Dinner",
+    "meeting_date": "2026-07-08",
+    "owner": null,
+    "owner_ambiguous": true,
+    "commitment": "Confirm venue headcount for the summer dinner",
+    "expected_deadline_field": "2026-07-10",
+    "expect_extracted": true,
+    "edge_case": "unowned-ambiguous-owner",
+    "expected_overdue_as_of_2026-07-25": true
+  },
+  {
+    "id": "gt-004",
+    "source_meeting": "Weekly Check-in — Founder C",
+    "meeting_date": "2026-07-01",
+    "owner": "Founder C",
+    "commitment": "Send updated cap table",
+    "expected_deadline_field": "2026-07-15",
+    "expect_extracted": true,
+    "edge_case": "pre-seeded-dedup-check",
+    "expected_overdue_as_of_2026-07-25": true,
+    "pre_seed_before_extraction_run": true,
+    "pre_seed_date_extracted": "2026-07-25"
+  },
+  {
+    "id": "gt-005",
+    "source_meeting": "Founder Coaching Session — Founder D",
+    "meeting_date": "2026-07-16",
+    "owner": "Founder D",
+    "commitment": "Draft a board update memo",
+    "expected_deadline_field": "2026-07-30",
+    "expect_extracted": true,
+    "edge_case": "clean-positive-future-deadline",
+    "expected_overdue_as_of_2026-07-25": false
+  },
+  {
+    "id": "gt-006",
+    "source_meeting": "Partner Sync — Solo Founders x Partner Org",
+    "meeting_date": "2026-07-20",
+    "owner": "Owner E",
+    "commitment": "Send partnership terms",
+    "expected_deadline_field": "2026-07-22",
+    "expect_extracted": true,
+    "edge_case": "clean-positive-multi-owner-meeting",
+    "expected_overdue_as_of_2026-07-25": true
+  },
+  {
+    "id": "gt-007",
+    "source_meeting": "Partner Sync — Solo Founders x Partner Org",
+    "meeting_date": "2026-07-20",
+    "owner": "Owner F",
+    "commitment": "Schedule a joint webinar",
+    "expected_deadline_field": "2026-08-15",
+    "expect_extracted": true,
+    "edge_case": "clean-positive-multi-owner-meeting-future-deadline",
+    "expected_overdue_as_of_2026-07-25": false
+  },
+  {
+    "id": "gt-neg-001",
+    "source_meeting": "Founder Coaching Session — Founder D",
+    "meeting_date": "2026-07-16",
+    "owner": "Founder D",
+    "commitment": "Vague aspiration to \"get better about following up with investors going forward\" — no deliverable, no deadline, not owed to anyone specific",
+    "expect_extracted": false,
+    "edge_case": "aspiration-not-a-commitment-negative-case"
+  }
+]
