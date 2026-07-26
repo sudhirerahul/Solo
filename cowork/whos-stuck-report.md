@@ -39,7 +39,12 @@
 > shared-style report. Instead route it to the Principal directly, DM-style, minimal detail: name the
 > founder and recommend a private check-in, without repeating the sensitive substance.
 >
-> Every quoted or summarized signal (in the shared report) must carry a permalink and a date.
+> Every quoted or summarized signal in the shared-style report must carry a permalink and a date. This
+> requirement applies to the shared report only — the privacy-routed DM to the Principal (personal,
+> health, or legal cases) must NOT include a permalink or direct link to the source note. Cite it in
+> general terms instead (e.g., "per 1:1 notes, [owner], [date]") — a permalink is a durable, forwardable
+> pointer, and attaching one to a "minimal detail" DM would let it be followed straight back to the exact
+> sensitive note the redaction was meant to avoid leaking.
 >
 > If no one is flagged this week, say so plainly rather than omitting the report.
 
@@ -59,11 +64,23 @@ risk to watch for)_
 - `[2026-07-25]` Connector blocker discovered — connected Slack workspace (claude-c1p4553.slack.com) has
   zero founder activity; see `tasks/todo.md`. Prompt hardened (three-bucket blocked/quiet/no-coverage
   split, baseline-required, privacy routing) ahead of real data becoming available.
-- Dry-run against synthetic fixture (scratchpad only, not real data): the three-bucket split, the
-  baseline-required quiet-flag rule, and the empty-result line all resolved cleanly and stayed
-  distinguishable across test cases (no-coverage founder never got folded into quiet; a within-baseline
-  founder correctly went unflagged with the baseline stated inline). One ambiguity worth closing before
-  real data arrives: unclear whether the "permalink and date" sourcing requirement applies to the
-  privacy-routed escalation copy or only to the shared-style report — attaching a raw permalink to a
-  "minimal detail" DM could itself leak the sensitive content the redaction was meant to avoid; should be
-  scoped to the shared report only.
+- `[2026-07-26]` Dry-run against a real, persisted fixture — `cowork/fixtures/sample-cohort-activity.md`
+  (7 fictional founders, 1 roster of record, Slack + Notion activity shaped like the real sources) — full
+  output and guardrail verification in `cowork/fixtures/dry-run-whos-stuck-report-2026-07-26.md`. All
+  branches resolved cleanly and distinguishably: blocked-beats-quiet precedence correctly picked Blocked
+  for a founder who independently qualified for both (Devrim Aksoy — stated fundraising obstacle plus an
+  11-day activity drop); the no-coverage founder (Marcus Webb) was reported in his own bucket and never
+  folded into quiet; the baseline-required rule was honored for a founder with no established cadence yet
+  (Tobias Reyes got the literal `baseline unknown — not flagged`, no default guessed); and the
+  personal/health founder (Amara Njoku) was fully excluded from the shared report and routed to a private,
+  minimal-detail escalation. This run also closed the previously-open ambiguity about whether the
+  "permalink and date" sourcing rule applies to the privacy-routed escalation: it's now scoped to the
+  shared report only (see the prompt text above) — the private DM cites a named source and date but no
+  clickable permalink, since a permalink there would itself be a forwardable leak vector back to the
+  sensitive note.
+- `[2026-07-25]` Opus review caught 2 real logic gaps in the initial hardening pass, both fixed: (1) the
+  three buckets could overlap with no precedence rule (a founder both citing an obstacle and going quiet
+  fit two buckets at once) — added blocked-beats-quiet precedence, and clarified no-coverage requires
+  absence from every source, not just Slack; (2) this file had no roster-of-record clause unlike its
+  sibling, so a founder with zero presence anywhere could never actually be enumerated into no-coverage —
+  added the same roster-of-record rule.

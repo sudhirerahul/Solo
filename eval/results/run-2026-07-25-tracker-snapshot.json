@@ -1,0 +1,96 @@
+{
+  "snapshot_taken": "2026-07-25",
+  "source": "notion-query-database-view on 🧪 SYNTHETIC Commitments Tracker (Eval Fixture)",
+  "view_url": "https://app.notion.com/p/c492e0946300449c8e5e8da5f9436d45?v=50d141e394f24e3685dbbbda93915dad",
+  "database_url": "https://app.notion.com/p/c492e0946300449c8e5e8da5f9436d45",
+  "data_source_id": "collection://72935174-d454-4cbf-b75b-569af58e16e4",
+  "row_count": 7,
+  "has_more": false,
+  "results": [
+    {
+      "Status": "Open",
+      "Deadline": "2026-07-30",
+      "Commitment": "Draft a board update memo",
+      "Owner": "Founder D",
+      "Data Source": "Synthetic-Eval-v1",
+      "Source meeting": "[SYNTHETIC] Founder Coaching Session — Founder D",
+      "date:Date extracted:start": "2026-07-25",
+      "date:Date extracted:is_datetime": 0,
+      "Name": "[SYNTHETIC] Founder D — Draft board update memo",
+      "url": "https://app.notion.com/p/3a893a35abe3812ab142e29c845636e5"
+    },
+    {
+      "Status": "Open",
+      "Deadline": "no deadline given",
+      "Commitment": "Send pitch deck to Investor X",
+      "Owner": "Founder B",
+      "Data Source": "Synthetic-Eval-v1",
+      "Source meeting": "[SYNTHETIC] Investor Intro — Founder B x Investor X",
+      "date:Date extracted:start": "2026-07-25",
+      "date:Date extracted:is_datetime": 0,
+      "Name": "[SYNTHETIC] Founder B — Send pitch deck to Investor X",
+      "url": "https://app.notion.com/p/3a893a35abe3812eb570c8299a1ed633"
+    },
+    {
+      "Status": "Open",
+      "Deadline": "2026-07-22",
+      "Commitment": "Send partnership terms",
+      "Owner": "Owner E",
+      "Data Source": "Synthetic-Eval-v1",
+      "Source meeting": "[SYNTHETIC] Partner Sync — Solo Founders x Partner Org",
+      "date:Date extracted:start": "2026-07-25",
+      "date:Date extracted:is_datetime": 0,
+      "Name": "[SYNTHETIC] Owner E — Send partnership terms",
+      "url": "https://app.notion.com/p/3a893a35abe3813fb3a6ca60d09505be"
+    },
+    {
+      "Status": "Open",
+      "Deadline": "2026-07-10",
+      "Commitment": "Confirm venue headcount for the summer dinner with the venue",
+      "Owner": "Unclear — no individual named in meeting notes (event team collectively discussed, nobody claimed it)",
+      "Data Source": "Synthetic-Eval-v1",
+      "Source meeting": "[SYNTHETIC] Dinner Planning — Summer Dinner",
+      "date:Date extracted:start": "2026-07-25",
+      "date:Date extracted:is_datetime": 0,
+      "Name": "[SYNTHETIC] Unclear owner — Confirm venue headcount",
+      "url": "https://app.notion.com/p/3a893a35abe3816fb7d1da78be812dea"
+    },
+    {
+      "Status": "Open",
+      "Deadline": "2026-07-18",
+      "Commitment": "Send updated financial model to the Principal",
+      "Owner": "Founder A",
+      "Data Source": "Synthetic-Eval-v1",
+      "Source meeting": "[SYNTHETIC] Onboarding Call — Founder A",
+      "date:Date extracted:start": "2026-07-25",
+      "date:Date extracted:is_datetime": 0,
+      "Name": "[SYNTHETIC] Founder A — Send updated financial model",
+      "url": "https://app.notion.com/p/3a893a35abe381e196b2fc45de4a09e4"
+    },
+    {
+      "Status": "Open",
+      "Deadline": "2026-08-15",
+      "Commitment": "Schedule a joint webinar (target date, not a hard commitment per notes)",
+      "Owner": "Owner F",
+      "Data Source": "Synthetic-Eval-v1",
+      "Source meeting": "[SYNTHETIC] Partner Sync — Solo Founders x Partner Org",
+      "date:Date extracted:start": "2026-07-25",
+      "date:Date extracted:is_datetime": 0,
+      "Name": "[SYNTHETIC] Owner F — Schedule joint webinar",
+      "url": "https://app.notion.com/p/3a893a35abe381fbaf24ed3e5cad3a42"
+    },
+    {
+      "Status": "Open",
+      "Deadline": "2026-07-15",
+      "Commitment": "Send updated cap table",
+      "Owner": "Founder C",
+      "Data Source": "Synthetic-Eval-v1",
+      "Source meeting": "[SYNTHETIC] Weekly Check-in — Founder C",
+      "date:Date extracted:start": "2026-07-25",
+      "date:Date extracted:is_datetime": 0,
+      "Name": "[SYNTHETIC] Founder C — Send updated cap table",
+      "url": "https://app.notion.com/p/3a893a35abe38198ad14d2251413bdbf",
+      "note": "pre-seeded before this run to test dedup; not created by this extraction pass"
+    }
+  ]
+}

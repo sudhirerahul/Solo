@@ -63,6 +63,11 @@ Findings from the dry run against `cowork/fixtures/sample-dinner-event.md`
   rather than infer" line, confirmed in the dry run's "Could not determine" block.
 - Read-only was implicit before, not stated. Since Cowork's Notion connector can technically write, added
   an explicit read-only line to both the prompt and the Config section rather than leaving it assumed.
-- Nothing needed changing in the reminder-drafting logic itself — the dry run's four drafts (Ana, Devon,
-  Sana, Ibrahim) came out specific and non-generic without further prompt changes, which validates the
-  "personalized enough that it doesn't read as a mail-merge" line as originally written.
+- **Open item — mail-merge risk not actually resolved.** The dry run's four drafts (Ana, Devon, Sana,
+  Ibrahim) collapse to one template — greeting, "haven't heard back," date, RSVP-deadline date, "we'd
+  love to have [Company] there," ask — with only the company name varying. Ana's is the clearest failure:
+  her Notes field is blank in the fixture, so her draft has no personalization beyond the company name,
+  which is exactly what the "doesn't read as a mail-merge" line is supposed to prevent. Not fixed yet.
+  Next calibration pass should try requiring the drafter to pull one detail that isn't the company/role
+  field (Plus-one, Last Reminded On history, invite context) — or, when no such detail exists anywhere
+  on the guest's row, have the prompt say so explicitly rather than defaulting to a company-name template.

@@ -20,6 +20,13 @@ UI, or wire the repo-based ones up as Claude Code Routines.
 (Slack channel IDs, Notion DB URLs, the Principal's name, etc.) before an automation is live. Fill these
 in before scheduling — don't let Claude guess at them.
 
+Claude Code Routines in this repo are implemented as GitHub Actions workflows using Anthropic's
+published `anthropics/claude-code-action@v1` (https://code.claude.com/docs/en/github-actions),
+triggered on a relevant repo event (e.g. a transcript commit) and opening a draft PR for human
+review. They are **not** the same as the `CronCreate` tool available inside an interactive Claude
+Code session — that tool is session-only, in-memory, and auto-expires after 7 days, so it cannot
+back durable, always-on repo automation.
+
 ## Two execution surfaces — which one, and why
 
 | | Cowork scheduled tasks | Claude Code Routines |
@@ -32,7 +39,8 @@ in before scheduling — don't let Claude guess at them.
 **Default to Cowork.** Reach for a Routine only when the artifact belongs in git (a versioned SOP, a
 transcript-to-shownotes pipeline where the transcript already lives in the repo) — that's exactly two of
 the thirteen automations below (SOP drift check, show notes drafting), and only if transcripts/SOPs are
-actually stored in a repo rather than Notion/Drive.
+actually stored in a repo rather than Notion/Drive. For show notes drafting this is now settled: transcripts
+are confirmed repo-committed (see `transcripts/README.md`), so SOP drift check remains the only still-unconfirmed one.
 
 Both surfaces are beta / research preview as of mid-2026. Run limits and behavior may shift — treat every
 prompt here as a calibration starting point, not a finished product. **Test manually before trusting any
@@ -46,19 +54,19 @@ index — status tracks whether it's live, calibrating, or not yet stood up.
 
 | # | Automation | Surface | Cadence | File | Status |
 |---|---|---|---|---|---|
-| 1 | Morning briefing | Cowork | Daily, AM | `cowork/morning-briefing.md` | Not stood up |
-| 2 | Weekly time audit | Cowork | Weekly | `cowork/weekly-time-audit.md` | Not stood up |
+| 1 | Morning briefing | Cowork | Daily, AM | `cowork/morning-briefing.md` | Calibrating (dry-run tested, pending live connector wiring) |
+| 2 | Weekly time audit | Cowork | Weekly | `cowork/weekly-time-audit.md` | Calibrating (dry-run tested, pending live connector wiring) |
 | 3 | Post-meeting action extraction | Cowork | Per-meeting or daily batch | `cowork/post-meeting-action-extraction.md` | Not stood up |
 | 4 | Open commitments digest | Cowork | Weekly | `cowork/open-commitments-digest.md` | Not stood up |
-| 5 | Onboarding status tracker | Cowork | Weekly during cohort ramp | `cowork/onboarding-status-tracker.md` | Blocked — connector points at wrong workspace (see tasks/todo.md) |
-| 6 | "Who's stuck" report | Cowork | Weekly during active cohort | `cowork/whos-stuck-report.md` | Blocked — connector points at wrong workspace (see tasks/todo.md) |
-| 7 | RSVP and reminder tracking | Cowork | Scheduled around event dates | `cowork/rsvp-reminder-tracking.md` | Not stood up |
-| 8 | Post-event follow-up drafts | Cowork | Day after each event | `cowork/post-event-follow-up.md` | Not stood up |
-| 9 | Guest research one-pager | Cowork | Few days before each recording | `cowork/guest-research-one-pager.md` | Not stood up |
-| 10 | Show notes drafting | Cowork or Routine | After each episode | `cowork/show-notes-drafting.md` or `routines/show-notes-drafting/` | Not stood up |
-| 11 | Relationship staleness check | Cowork | Weekly | `cowork/relationship-staleness-check.md` | Not stood up |
-| 12 | SOP drift check | Routine | Weekly | `routines/sop-drift-check/PROMPT.md` | Not stood up |
-| 13 | Daily rollup | Cowork | Daily, EOD | `cowork/daily-rollup.md` | Not stood up |
+| 5 | Onboarding status tracker | Cowork | Weekly during cohort ramp | `cowork/onboarding-status-tracker.md` | Calibrating (dry-run tested, pending live connector wiring) |
+| 6 | "Who's stuck" report | Cowork | Weekly during active cohort | `cowork/whos-stuck-report.md` | Calibrating (dry-run tested, pending live connector wiring) |
+| 7 | RSVP and reminder tracking | Cowork | Scheduled around event dates | `cowork/rsvp-reminder-tracking.md` | Calibrating (dry-run tested, pending live connector wiring) |
+| 8 | Post-event follow-up drafts | Cowork | Day after each event | `cowork/post-event-follow-up.md` | Calibrating (dry-run tested, pending live connector wiring) |
+| 9 | Guest research one-pager | Cowork | Few days before each recording | `cowork/guest-research-one-pager.md` | Calibrating (dry-run tested, pending live connector wiring) |
+| 10 | Show notes drafting | Routine | After each episode | `routines/show-notes-drafting/PROMPT.md` + `.github/workflows/show-notes-drafting.yml` | Built, inert — needs GitHub remote, ANTHROPIC_API_KEY secret, Claude GitHub App installed, and the "Allow GitHub Actions to create and approve pull requests" repo setting |
+| 11 | Relationship staleness check | Cowork | Weekly | `cowork/relationship-staleness-check.md` | Calibrating (dry-run tested, pending live connector wiring) |
+| 12 | SOP drift check | Routine | Weekly | `routines/sop-drift-check/PROMPT.md` | Calibrating — dry-run only vs. synthetic fixture; trigger + weekly-input wiring pending (see tasks/todo.md) |
+| 13 | Daily rollup | Cowork | Daily, EOD | `cowork/daily-rollup.md` | Calibrating (dry-run tested, pending live connector wiring) |
 
 ## Build order — do not stand up all of this at once
 
@@ -70,6 +78,11 @@ index — status tracks whether it's live, calibrating, or not yet stood up.
    not a single setup session. Resist the urge to turn all thirteen on immediately.
 5. Log every prompt correction to `tasks/lessons.md` (format: `[date] | what went wrong | rule to prevent it`)
    so the next calibration pass doesn't relearn the same thing.
+6. Exception on record: automations #7 and #8 (RSVP and reminder tracking, post-event follow-up drafts)
+   were dry-run tested and hardened together, out of the normal one-per-week sequence, at the user's
+   explicit request — they're a natural event-lifecycle pair. See `cowork/fixtures/dry-run-2026-07-25.md`.
+   This isn't a silent violation of rule 3 above; both remain "Calibrating," not live, until connectors are
+   wired.
 
 ## Guardrails (apply to every automation in this stack)
 
@@ -91,6 +104,8 @@ index — status tracks whether it's live, calibrating, or not yet stood up.
 
 ```
 CLAUDE.md                          this file
+RUNBOOK.md                         step-by-step: how to actually turn on each automation (what to paste
+                                    where, what to configure first, what to expect on first run)
 tasks/
   todo.md                          current build-order state, open questions
   lessons.md                       corrections log — read at every session start
@@ -104,12 +119,31 @@ cowork/                            versioned prompt source for Cowork scheduled 
   rsvp-reminder-tracking.md
   post-event-follow-up.md
   guest-research-one-pager.md
-  show-notes-drafting.md
   relationship-staleness-check.md
   daily-rollup.md
+  fixtures/                        synthetic mock data for dry-running Cowork prompts before connectors are live
+    sample-dinner-event.md
+    sample-investor-partner-crm.md
+    sample-daily-rollup-day.md
+    sample-morning-briefing-day.md
+    sample-week-calendar.md
+    sample-cohort-onboarding-checklist.md
+    sample-cohort-activity.md
+    dry-run-2026-07-25.md            RSVP tracking, post-event follow-up, relationship staleness check
+    dry-run-morning-briefing-2026-07-26.md
+    dry-run-weekly-time-audit-2026-07-26.md
+    dry-run-onboarding-status-tracker-2026-07-26.md
+    dry-run-whos-stuck-report-2026-07-26.md
 routines/                          repo-based Claude Code Routines
   sop-drift-check/PROMPT.md
   show-notes-drafting/PROMPT.md
+.github/workflows/
+  show-notes-drafting.yml          GitHub Actions workflow implementing the show-notes-drafting Routine
+transcripts/                       episode transcripts committed to this repo (triggers show-notes-drafting)
+show-notes/                        drafted show notes, paired 1:1 by basename with transcripts/
+samples/                           synthetic dry-run test fixtures/outputs for the two automations below
+  guest-research-one-pager/        fixture corpus + synthetic output for the guest research one-pager (#9)
+  show-notes-drafting/             fixture transcript + synthetic output for show notes drafting (#10)
 ```
 
 ## Session start (per global workflow)

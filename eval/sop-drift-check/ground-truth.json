@@ -1,0 +1,105 @@
+{
+  "findings": [
+    {
+      "id": "gt-drift-001",
+      "sop_source": "CLAUDE.md",
+      "sop_section": "## Build order — do not stand up all of this at once",
+      "sop_line_quote": "3. Add exactly one new task per week from here. Update the status column above as each goes live.",
+      "observed_source": "eval/sop-drift-check/golden-weeks/01-week-of-2026-07-20-ops-sync-notes.md",
+      "observed_behavior": "Three Cowork automations (morning briefing, daily rollup, open commitments digest) were all turned on and scheduled live within the same week (Tue 2026-07-21 and Wed 2026-07-22), violating the one-per-week cadence, and CLAUDE.md's automation-catalog status column was never updated for any of the three (all still read 'Not stood up' as of Friday).",
+      "expect_flagged": true,
+      "expected_classification": "b-team-drifted",
+      "expected_proposed_action": "flag only, human call",
+      "expected_sop_edit": null,
+      "severity": "high",
+      "edge_case": "multi-automation-standup-violation"
+    },
+    {
+      "id": "gt-drift-002",
+      "sop_source": "CLAUDE.md",
+      "sop_section": "## Guardrails (apply to every automation in this stack)",
+      "sop_line_quote": "**Never auto-send anything externally facing.** Thank-you notes, investor check-ins, founder nudges — always draft, never send. A human (the Principal or CoS) reviews and hits send.",
+      "observed_source": "eval/sop-drift-check/golden-weeks/02-week-of-2026-07-20-slack-activity.md",
+      "observed_behavior": "The relationship-staleness check was wired with a Gmail auto-send step 'to save a step' (2026-07-20/21 messages), and on 2026-07-23 six investor check-in emails went out automatically with no human review step, directly contradicting cowork/relationship-staleness-check.md's own 'Check-in drafts are drafts only — a human sends.' line.",
+      "expect_flagged": true,
+      "expected_classification": "b-team-drifted",
+      "expected_proposed_action": "flag only, human call",
+      "expected_sop_edit": null,
+      "severity": "high",
+      "edge_case": "guardrail-violation-auto-send"
+    },
+    {
+      "id": "gt-drift-003",
+      "sop_source": "cowork/morning-briefing.md",
+      "sop_section": "## Prompt",
+      "sop_line_quote": "Close with the two or three things today that only the Principal can do — meetings or decisions no one else on the team can substitute for — and name why each one specifically requires them. If nothing today rises to that bar, say so rather than manufacturing three items.",
+      "observed_source": "eval/sop-drift-check/golden-weeks/02-week-of-2026-07-20-slack-activity.md",
+      "observed_behavior": "The morning-briefing prompt was edited three times directly in the Cowork UI during the week (2026-07-20, 2026-07-21, 2026-07-22): the 'two or three things' clause was widened to five things, and the trailing sentence about saying so rather than manufacturing three items when nothing rises to that bar was deleted. Explicitly confirmed (2026-07-22 08:20) as living only in Cowork, never back-ported to cowork/morning-briefing.md in this repo.",
+      "expect_flagged": true,
+      "expected_classification": "b-team-drifted",
+      "expected_proposed_action": "flag only, human call",
+      "expected_sop_edit": null,
+      "severity": "high",
+      "edge_case": "unsynced-cowork-ui-edit"
+    },
+    {
+      "id": "gt-drift-004",
+      "sop_source": "cowork/morning-briefing.md",
+      "sop_section": "header block (Cadence line)",
+      "sop_line_quote": "**Cadence:** Daily, 7:00am PT (before the Principal's first meeting)",
+      "observed_source": "eval/sop-drift-check/golden-weeks/01-week-of-2026-07-20-ops-sync-notes.md",
+      "observed_behavior": "The Principal's standing first call moved to a recurring 6:45am PT East-Coast investor call block starting Monday 2026-07-20. The team deliberately re-set the morning briefing to fire at 6:00am PT instead of the documented 7:00am PT starting Thursday 2026-07-23, ran it that way for the rest of the week, and confirmed at Friday retro that it's working better landing ahead of the 6:45 call, with no intent to revert.",
+      "expect_flagged": true,
+      "expected_classification": "a-sop-should-change",
+      "expected_proposed_action": "propose SOP edit to cowork/morning-briefing.md:4 (Cadence line)",
+      "expected_sop_edit": "Change cowork/morning-briefing.md line 4 from '**Cadence:** Daily, 7:00am PT (before the Principal's first meeting)' to '**Cadence:** Daily, 6:00am PT (before the Principal's first meeting, moved earlier from 7:00am PT on 2026-07-23 since the Principal's first call is now a recurring 6:45am PT East-Coast investor block)'.",
+      "severity": "medium",
+      "edge_case": "deliberate-intentional-timing-change"
+    },
+    {
+      "id": "gt-drift-neg-001",
+      "sop_source": "CLAUDE.md",
+      "sop_section": "## Automation catalog",
+      "sop_line_quote": "| 6 | \"Who's stuck\" report | Cowork | Weekly during active cohort | `cowork/whos-stuck-report.md` | Blocked — connector points at wrong workspace (see tasks/todo.md) |",
+      "observed_source": "eval/sop-drift-check/golden-weeks/02-week-of-2026-07-20-slack-activity.md",
+      "observed_behavior": "A single Slack exchange (2026-07-24 17:50-17:52) notes the who's-stuck report was skipped again this week, with no further detail given either way about why or since when.",
+      "expect_flagged": false,
+      "expected_classification": null,
+      "expected_proposed_action": "not applicable — automation's own catalog status is already 'Blocked', so a non-run is not drift",
+      "expected_sop_edit": null,
+      "severity": "low",
+      "edge_case": "non-run-not-drift-status-blocked"
+    },
+    {
+      "id": "gt-drift-amb-001",
+      "sop_source": "CLAUDE.md",
+      "sop_section": "## Session start (per global workflow)",
+      "sop_line_quote": "4. Verify connected MCP workspaces (Slack team domain, Notion top-level page/database titles) actually belong to Solo Founders Program before treating any connector-derived data as real — do this before trusting output from any data-dependent automation or recon task.",
+      "observed_source": "eval/sop-drift-check/golden-weeks/01-week-of-2026-07-20-ops-sync-notes.md",
+      "observed_behavior": "Wednesday's notes state 'Ops Contractor G pulled a cohort list out of Notion this afternoon for the onboarding tracker' — the fixture says nothing about whether workspace identity was verified first, and nothing about which Notion workspace was used.",
+      "expect_flagged": false,
+      "expected_classification": "insufficient-evidence",
+      "expected_proposed_action": "report cannot-determine",
+      "expected_sop_edit": null,
+      "severity": "medium",
+      "edge_case": "silent-on-verification-cannot-determine"
+    }
+  ],
+  "grading_contract": {
+    "total_findings_expected_flagged_as_drift": 4,
+    "flagged_ids": ["gt-drift-001", "gt-drift-002", "gt-drift-003", "gt-drift-004"],
+    "negative_case": {
+      "id": "gt-drift-neg-001",
+      "rule": "must produce zero findings — the automation's own CLAUDE.md catalog status is already 'Blocked', so a non-run this week is not evidence of drift"
+    },
+    "ambiguous_case": {
+      "id": "gt-drift-amb-001",
+      "rule": "must be reported as insufficient-evidence / cannot-determine, never as an asserted drift and never as asserted compliance — the fixture is deliberately silent on whether workspace identity was verified"
+    },
+    "total_proposed_sop_edits_expected": 1,
+    "proposed_edit_id": "gt-drift-004",
+    "evidence_requirement": "every flagged finding's sop_line_quote must be independently verifiable via grep against the real named file (CLAUDE.md or the relevant cowork/*.md / routines/*/PROMPT.md file)",
+    "no_real_sop_files_may_be_modified_by_the_dry_run_reasoning_step": true,
+    "every_output_line_in_the_results_file_must_be_synthetic_labeled": true
+  }
+}
