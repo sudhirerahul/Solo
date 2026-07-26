@@ -113,12 +113,16 @@ yet. That premise is now known to be false. Consequences:
   wherever cohort/investor data actually lives (a spreadsheet, another tool) — not as a pending reconnection
   this session is waiting on.
 
-## Next — show notes Routine (not done here, needs separate human go-ahead)
-- [ ] Create a GitHub remote for this repo and push — **needs explicit human go-ahead**, not done as part of this change
+## Next — show notes Routine + SOP drift check Routine
+- [x] `[2026-07-26]` Created GitHub remote `https://github.com/sudhirerahul/Solo` (public, per explicit
+  user go-ahead) and pushed `main` — scanned the full working tree for secrets/real emails first (none
+  found; all fixture addresses are `mock-*@example.com`). This was the user's own repo-naming/visibility
+  choice (public) after being offered a private option.
 - [ ] Add the `ANTHROPIC_API_KEY` repository secret
 - [ ] Install the Claude GitHub App (https://github.com/apps/claude)
 - [ ] Enable Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests"
-- [ ] Commit a first real transcript once live and confirm a draft PR opens as expected
+- [ ] Commit a first real transcript once live and confirm a draft PR opens as expected (show notes drafting)
+- [ ] Resolve SOP drift check's still-unconfigured trigger/schedule syntax (separate from the infra above)
 
 ## Next — rollout, one per week, per the build order in CLAUDE.md
 - [ ] Fill in `[CONFIGURE]` placeholders throughout `cowork/*.md` and `routines/*` (Slack channel IDs, Notion DB URLs, calendar accounts, cohort tracker location, principal's name)
